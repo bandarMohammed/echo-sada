@@ -7,14 +7,17 @@ import {
   Pill,
   AlertTriangle,
 } from "lucide-react";
+import { Suspense } from "react";
 import { getActor } from "@/lib/session";
 import { healthData } from "@/data";
-import { aiService } from "@/ai";
 import { fromPrismaBundle } from "@/domain/detectors";
 import { staleMeasurements } from "@/domain/freshness";
 import { assembleTimeline } from "@/domain/journey/timeline";
 import { recordAudit } from "@/lib/audit";
-import { InsightCard } from "@/components/patient/InsightCard";
+import {
+  PatientInsightList,
+  InsightsSkeleton,
+} from "@/components/patient/PatientInsightList";
 import { Link } from "@/i18n/navigation";
 import type { FreshnessKey } from "@/config/freshness";
 
@@ -33,7 +36,8 @@ export default async function PatientDashboard() {
     healthData.listAuthorizedPatients(actor),
     healthData.getRecordBundle(actor, patientId),
   ]);
-  const insights = await aiService.generateInsights(bundle, "PATIENT");
+  // NOTE: AI insight generation is intentionally NOT awaited here — it streams
+  // via <Suspense> below so the dashboard shell is usable immediately.
 
   const input = fromPrismaBundle(bundle);
   const stale = staleMeasurements(input.vitals);
@@ -41,10 +45,7 @@ export default async function PatientDashboard() {
   const now = new Date();
 
   const t = await getTranslations("dashboard");
-  const tType = await getTranslations("insightType");
-  const tSev = await getTranslations("severity");
   const tFresh = await getTranslations("freshness");
-  const tc = await getTranslations("common");
 
   const firstName = summary?.displayName?.split(" ")[0] ?? "";
   const activeMeds = bundle.medications.filter((m) => m.status === "ACTIVE").length;
@@ -116,27 +117,9 @@ export default async function PatientDashboard() {
             </Link>
           </div>
 
-          {insights.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
-              {t("noInsights")}
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {insights.map((insight, i) => (
-                <InsightCard
-                  key={i}
-                  insight={insight}
-                  typeLabel={tType(insight.type)}
-                  severityLabel={tSev(insight.severity)}
-                  recommendationLabel={t("recommendation")}
-                  evidenceLabel={t("evidence")}
-                />
-              ))}
-              <p className="pt-1 text-center text-[11px] text-muted-foreground">
-                {tc("notADiagnosis")}
-              </p>
-            </div>
-          )}
+          <Suspense fallback={<InsightsSkeleton />}>
+            <PatientInsightList bundle={bundle} />
+          </Suspense>
         </section>
 
         {/* Side column */}

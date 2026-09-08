@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { app } from "@/config/app";
 import { switchIdentity } from "@/app/actions/demo";
 import { getFeaturedDoctorId } from "@/lib/demo";
+import { SubmitButton } from "@/components/shell/SubmitButton";
 import type { Locale } from "@/config/app";
 
 export default async function Home({
@@ -39,20 +40,10 @@ export default async function Home({
 
         <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <form action={enterPatient} className="w-full sm:w-auto">
-            <button
-              type="submit"
-              className="inline-flex h-12 w-full items-center justify-center rounded-2xl bg-primary px-8 font-semibold text-primary-foreground transition hover:opacity-90 sm:w-auto"
-            >
-              {t("enterAsPatient")}
-            </button>
+            <SubmitButton variant="primary">{t("enterAsPatient")}</SubmitButton>
           </form>
           <form action={enterDoctor} className="w-full sm:w-auto">
-            <button
-              type="submit"
-              className="inline-flex h-12 w-full items-center justify-center rounded-2xl border border-border bg-card px-8 font-semibold text-card-foreground transition hover:bg-muted sm:w-auto"
-            >
-              {t("enterAsDoctor")}
-            </button>
+            <SubmitButton variant="secondary">{t("enterAsDoctor")}</SubmitButton>
           </form>
         </div>
 
