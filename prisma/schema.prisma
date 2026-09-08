@@ -1,0 +1,587 @@
+// ECHO — clinical data model.
+// Normalized + extensible: enum-typed kinds and JSON `meta`/`evidence`
+// columns let new record types and future modules attach without rewrites.
+// Everything patient-scoped carries `patientId` (PatientProfile.id) to enable
+// row-level scoping today and Postgres RLS later.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum Role {
+  PATIENT
+  DOCTOR
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  UNKNOWN
+}
+
+enum RelationshipStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum EncounterType {
+  OUTPATIENT
+  EMERGENCY
+  FOLLOW_UP
+  TELEHEALTH
+  INPATIENT
+  LAB_ONLY
+}
+
+enum SymptomSeverity {
+  MILD
+  MODERATE
+  SEVERE
+}
+
+enum VitalType {
+  WEIGHT
+  HEIGHT
+  BMI
+  BLOOD_PRESSURE_SYSTOLIC
+  BLOOD_PRESSURE_DIASTOLIC
+  HEART_RATE
+  TEMPERATURE
+  SPO2
+  BLOOD_GLUCOSE
+  RESP_RATE
+}
+
+enum LabFlag {
+  LOW
+  NORMAL
+  HIGH
+  CRITICAL
+}
+
+enum MedicationStatus {
+  ACTIVE
+  STOPPED
+  COMPLETED
+  ON_HOLD
+}
+
+enum ReportType {
+  RADIOLOGY
+  PATHOLOGY
+  DISCHARGE_SUMMARY
+  CONSULT_NOTE
+  PROCEDURE
+  PROGRESS_NOTE
+}
+
+enum ReferralStatus {
+  PENDING
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum FollowUpSourceType {
+  ENCOUNTER
+  LAB_RESULT
+  REPORT
+  REFERRAL
+  RECOMMENDATION
+}
+
+enum FollowUpStatus {
+  OPEN
+  RESOLVED
+  OVERDUE
+}
+
+enum Severity {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum AlertKind {
+  FRESHNESS
+  FOLLOW_UP
+  TREND
+  PREVENTIVE
+  MISSING_THREAD
+}
+
+enum AlertStatus {
+  OPEN
+  ACKNOWLEDGED
+  DISMISSED
+  RESOLVED
+}
+
+enum RecommendationKind {
+  PREVENTIVE
+  LIFESTYLE
+  SCREENING
+  FOLLOW_UP_REMINDER
+  MEDICATION_ADHERENCE
+}
+
+enum RecommendationStatus {
+  OPEN
+  ACCEPTED
+  DISMISSED
+}
+
+enum EchoPersona {
+  PATIENT
+  DOCTOR
+}
+
+enum AIMessageRole {
+  USER
+  ASSISTANT
+  SYSTEM
+}
+
+enum InsightType {
+  UNRESOLVED_FOLLOW_UP
+  REPEATED_PATTERN
+  CHANGE_DETECTION
+  MISSING_THREAD
+  PREVENTIVE_RECOMMENDATION
+}
+
+enum AuditAction {
+  VIEW_PATIENT
+  VIEW_RECORD
+  AI_CHAT
+  AI_INSIGHT_GENERATED
+  SWITCH_ROLE
+  LOGIN
+  THREAD_UPDATE
+}
+
+// ---------------------------------------------------------------------------
+// Identity
+// ---------------------------------------------------------------------------
+
+model User {
+  id          String   @id @default(cuid())
+  role        Role
+  locale      String   @default("ar")
+  displayName String
+  email       String?  @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  patientProfile PatientProfile?
+  doctorProfile  DoctorProfile?
+  echoThreads    EchoThread[]
+  auditLogs      AuditLog[]
+  aiInsights     AIInsight[]     @relation("InsightGeneratedBy")
+
+  @@index([role])
+}
+
+model PatientProfile {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mrn             String   @unique
+  dob             DateTime
+  gender          Gender   @default(UNKNOWN)
+  heightCm        Float?
+  bloodType       String?
+  nationalityCode String?
+  city            String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  doctorLinks     PatientDoctorRelationship[]
+  encounters      Encounter[]
+  symptoms        Symptom[]
+  vitals          Vital[]
+  labResults      LabResult[]
+  medications     Medication[]
+  reports         MedicalReport[]
+  referrals       Referral[]
+  appointments    Appointment[]
+  followUps       FollowUp[]
+  alerts          Alert[]
+  recommendations Recommendation[]
+  echoThreads     EchoThread[]
+  aiInsights      AIInsight[]
+  groundTruths    GroundTruth[]
+  clinicalThreads ClinicalThread[]
+}
+
+model DoctorProfile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  licenseNo String   @unique
+  title     String?
+  bio       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  specialties     DoctorSpecialty[]
+  patientLinks    PatientDoctorRelationship[]
+  encounters      Encounter[]
+  authoredReports MedicalReport[]
+  referralsFrom   Referral[]
+  medications     Medication[]
+  appointments    Appointment[]
+}
+
+model Specialty {
+  id     String @id @default(cuid())
+  code   String @unique
+  nameAr String
+  nameEn String
+
+  doctors      DoctorSpecialty[]
+  referralsTo  Referral[]
+  appointments Appointment[]
+}
+
+model DoctorSpecialty {
+  doctorId    String
+  specialtyId String
+  doctor      DoctorProfile @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  specialty   Specialty     @relation(fields: [specialtyId], references: [id], onDelete: Cascade)
+
+  @@id([doctorId, specialtyId])
+  @@index([specialtyId])
+}
+
+// The authorization backbone: a doctor may access a patient ONLY via an
+// active row here.
+model PatientDoctorRelationship {
+  id        String             @id @default(cuid())
+  patientId String
+  doctorId  String
+  patient   PatientProfile     @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  doctor    DoctorProfile      @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  status    RelationshipStatus @default(ACTIVE)
+  isPrimary Boolean            @default(false)
+  since     DateTime           @default(now())
+
+  @@unique([patientId, doctorId])
+  @@index([doctorId, status])
+  @@index([patientId, status])
+}
+
+// ---------------------------------------------------------------------------
+// Clinical records (all patient-scoped)
+// ---------------------------------------------------------------------------
+
+model Encounter {
+  id          String         @id @default(cuid())
+  patientId   String
+  patient     PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  doctorId    String?
+  doctor      DoctorProfile? @relation(fields: [doctorId], references: [id])
+  specialtyId String?
+  date        DateTime
+  type        EncounterType
+  reason      String
+  summary     String?
+  createdAt   DateTime       @default(now())
+
+  symptoms   Symptom[]
+  labResults LabResult[]
+  reports    MedicalReport[]
+  followUps  FollowUp[]
+
+  @@index([patientId, date])
+}
+
+model Symptom {
+  id          String           @id @default(cuid())
+  patientId   String
+  patient     PatientProfile   @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  encounterId String?
+  encounter   Encounter?       @relation(fields: [encounterId], references: [id])
+  code        String?
+  label       String
+  severity    SymptomSeverity?
+  onsetDate   DateTime
+  note        String?
+
+  @@index([patientId, onsetDate])
+  @@index([patientId, label])
+}
+
+model Vital {
+  id         String         @id @default(cuid())
+  patientId  String
+  patient    PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  type       VitalType
+  valueNum   Float
+  unit       String
+  measuredAt DateTime
+  source     String?
+
+  @@index([patientId, type, measuredAt])
+}
+
+model LabResult {
+  id          String         @id @default(cuid())
+  patientId   String
+  patient     PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  encounterId String?
+  encounter   Encounter?     @relation(fields: [encounterId], references: [id])
+  panel       String
+  analyte     String
+  loinc       String?
+  valueNum    Float?
+  valueText   String?
+  unit        String?
+  refLow      Float?
+  refHigh     Float?
+  flag        LabFlag        @default(NORMAL)
+  takenAt     DateTime
+
+  @@index([patientId, analyte, takenAt])
+}
+
+model Medication {
+  id             String           @id @default(cuid())
+  patientId      String
+  patient        PatientProfile   @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  prescribedById String?
+  prescribedBy   DoctorProfile?   @relation(fields: [prescribedById], references: [id])
+  name           String
+  dose           String
+  frequency      String
+  route          String?
+  status         MedicationStatus @default(ACTIVE)
+  startDate      DateTime
+  endDate        DateTime?
+  reason         String?
+
+  @@index([patientId, status])
+}
+
+model MedicalReport {
+  id             String         @id @default(cuid())
+  patientId      String
+  patient        PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  encounterId    String?
+  encounter      Encounter?     @relation(fields: [encounterId], references: [id])
+  authorDoctorId String?
+  authorDoctor   DoctorProfile? @relation(fields: [authorDoctorId], references: [id])
+  type           ReportType
+  title          String
+  body           String
+  issuedAt       DateTime
+
+  @@index([patientId, issuedAt])
+}
+
+model Referral {
+  id            String         @id @default(cuid())
+  patientId     String
+  patient       PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  fromDoctorId  String?
+  fromDoctor    DoctorProfile? @relation(fields: [fromDoctorId], references: [id])
+  toSpecialtyId String
+  toSpecialty   Specialty      @relation(fields: [toSpecialtyId], references: [id])
+  reason        String
+  status        ReferralStatus @default(PENDING)
+  createdAt     DateTime
+
+  @@index([patientId])
+}
+
+model Appointment {
+  id           String            @id @default(cuid())
+  patientId    String
+  patient      PatientProfile    @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  doctorId     String?
+  doctor       DoctorProfile?    @relation(fields: [doctorId], references: [id])
+  specialtyId  String?
+  specialty    Specialty?        @relation(fields: [specialtyId], references: [id])
+  scheduledFor DateTime
+  status       AppointmentStatus @default(SCHEDULED)
+  reason       String?
+
+  @@index([patientId, scheduledFor])
+}
+
+// Central to the "unresolved follow-up" pattern. References a source record
+// polymorphically via (sourceType, sourceId).
+model FollowUp {
+  id                   String             @id @default(cuid())
+  patientId            String
+  patient              PatientProfile     @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  encounterId          String?
+  encounter            Encounter?         @relation(fields: [encounterId], references: [id])
+  sourceType           FollowUpSourceType
+  sourceId             String
+  dueBy                DateTime?
+  status               FollowUpStatus     @default(OPEN)
+  note                 String
+  resolvedAt           DateTime?
+  resolvedByRecordType String?
+  resolvedByRecordId   String?
+
+  @@index([patientId, status])
+}
+
+// ---------------------------------------------------------------------------
+// Derived / AI layer
+// ---------------------------------------------------------------------------
+
+model Alert {
+  id        String         @id @default(cuid())
+  patientId String
+  patient   PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  kind      AlertKind
+  severity  Severity       @default(MEDIUM)
+  title     String
+  body      String
+  meta      Json?
+  status    AlertStatus    @default(OPEN)
+  createdAt DateTime       @default(now())
+
+  @@index([patientId, status])
+}
+
+model Recommendation {
+  id        String               @id @default(cuid())
+  patientId String
+  patient   PatientProfile       @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  kind      RecommendationKind
+  title     String
+  body      String
+  evidence  Json?
+  status    RecommendationStatus @default(OPEN)
+  createdAt DateTime             @default(now())
+
+  @@index([patientId, status])
+}
+
+model EchoThread {
+  id               String         @id @default(cuid())
+  ownerUserId      String
+  owner            User           @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
+  subjectPatientId String
+  subjectPatient   PatientProfile @relation(fields: [subjectPatientId], references: [id], onDelete: Cascade)
+  persona          EchoPersona
+  title            String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  messages AIMessage[]
+
+  @@index([ownerUserId])
+  @@index([subjectPatientId])
+}
+
+model AIMessage {
+  id        String        @id @default(cuid())
+  threadId  String
+  thread    EchoThread    @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  role      AIMessageRole
+  content   String
+  evidence  Json?
+  tokens    Int?
+  createdAt DateTime      @default(now())
+
+  @@index([threadId, createdAt])
+}
+
+model AIInsight {
+  id                 String         @id @default(cuid())
+  patientId          String
+  patient            PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  generatedForUserId String?
+  generatedFor       User?          @relation("InsightGeneratedBy", fields: [generatedForUserId], references: [id])
+  persona            EchoPersona
+  type               InsightType
+  severity           Severity
+  title              String
+  summary            String
+  recommendation     String?
+  evidence           Json
+  createdAt          DateTime       @default(now())
+
+  @@index([patientId, type])
+}
+
+model AuditLog {
+  id               String      @id @default(cuid())
+  actorUserId      String
+  actor            User        @relation(fields: [actorUserId], references: [id], onDelete: Cascade)
+  action           AuditAction
+  subjectPatientId String?
+  resourceType     String?
+  resourceId       String?
+  meta             Json?
+  at               DateTime    @default(now())
+
+  @@index([actorUserId, at])
+  @@index([subjectPatientId])
+}
+
+// A persistent, evidence-grounded care thread derived deterministically from
+// a detector finding. Stable identity via (patientId, fingerprint) prevents
+// duplicates across syncs. Patient and doctor reference the SAME row; only the
+// presentation differs. The LLM never creates threads.
+model ClinicalThread {
+  id             String         @id @default(cuid())
+  patientId      String
+  patient        PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  // Deterministic dedup key: finding type + its source record ids.
+  fingerprint    String
+  type           InsightType
+  severity       Severity
+  title          String
+  summary        String
+  recommendation String?
+  evidence       Json
+  status         AlertStatus    @default(OPEN)
+  firstDetectedAt DateTime      @default(now())
+  lastDetectedAt DateTime       @default(now())
+  acknowledgedAt DateTime?
+  resolvedAt     DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@unique([patientId, fingerprint])
+  @@index([patientId, status])
+}
+
+// Internal ground-truth: the patterns intentionally designed into each
+// patient, with the exact record ids that constitute the expected evidence.
+// Never exposed to patients or doctors; used only by the eval harness.
+model GroundTruth {
+  id                String         @id @default(cuid())
+  patientId         String
+  patient           PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  patternType       InsightType
+  description       String
+  expectedRecordIds Json
+  createdAt         DateTime       @default(now())
+
+  @@index([patientId])
+}

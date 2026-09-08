@@ -1,26 +1,66 @@
 @import "tailwindcss";
 
+/* ECHO design tokens — calm clinical teal, high legibility, light + dark. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f5f8f8;
+  --foreground: #0b1f24;
+  --card: #ffffff;
+  --card-foreground: #0b1f24;
+  --muted: #eaf0f1;
+  --muted-foreground: #5b7178;
+  --primary: #0e7c7b;
+  --primary-foreground: #ffffff;
+  --accent: #12a594;
+  --accent-foreground: #ffffff;
+  --border: #dbe4e5;
+  --ring: #12a594;
+  --danger: #d64545;
+  --warning: #d9822b;
+  --success: #2f9e63;
+  --radius: 0.85rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #071417;
+    --foreground: #e6f1f2;
+    --card: #0c2024;
+    --card-foreground: #e6f1f2;
+    --muted: #102a2f;
+    --muted-foreground: #8aa3a8;
+    --primary: #17b3ae;
+    --primary-foreground: #04211f;
+    --accent: #2bd4c0;
+    --accent-foreground: #04211f;
+    --border: #163338;
+    --ring: #2bd4c0;
+    --danger: #f26d6d;
+    --warning: #eaa14b;
+    --success: #57c98a;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-success: var(--success);
+  --radius-app: var(--radius);
+  --font-sans: var(--font-arabic);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-arabic), var(--font-latin), system-ui, -apple-system,
+    "Segoe UI", sans-serif;
 }

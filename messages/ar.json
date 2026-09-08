@@ -1,0 +1,266 @@
+{
+  "app": {
+    "name": "صدى",
+    "latinName": "ECHO",
+    "tagline": "الذاكرة الثانية للمريض"
+  },
+  "landing": {
+    "eyebrow": "منصة ذكاء صحي",
+    "title": "رحلتك الصحية، مفهومة عبر الزمن",
+    "subtitle": "صدى يحوّل بياناتك الصحية الموجودة إلى رحلة متصلة ومفهومة — يحلّل، ويكتشف، ويشرح، ويوصي، وينبّه. دون تشخيص.",
+    "enterAsPatient": "الدخول كمريض",
+    "enterAsDoctor": "الدخول كطبيب",
+    "demoNote": "بيئة تجريبية ببيانات اصطناعية فقط — لا تُستخدم بيانات مرضى حقيقية."
+  },
+  "common": {
+    "language": "اللغة",
+    "loading": "جارٍ التحميل…",
+    "back": "رجوع",
+    "patient": "مريض",
+    "doctor": "طبيب",
+    "viewAll": "عرض الكل",
+    "none": "لا يوجد",
+    "notADiagnosis": "هذه ليست تشخيصاً — للمعلومة فقط، راجع طبيبك."
+  },
+  "roles": {
+    "patient": "مريض",
+    "doctor": "طبيب",
+    "viewingAs": "أنت الآن",
+    "selectPatient": "اختر مريضاً",
+    "selectDoctor": "اختر طبيباً"
+  },
+  "nav": {
+    "dashboard": "الرئيسية",
+    "timeline": "الرحلة الصحية",
+    "labs": "التحاليل",
+    "medications": "الأدوية",
+    "reports": "التقارير",
+    "appointments": "المواعيد",
+    "doctors": "الأطباء",
+    "chat": "مساعد صدى",
+    "alerts": "التنبيهات",
+    "threads": "المسارات الصحية",
+    "profile": "الملف الصحي",
+    "patients": "المرضى"
+  },
+  "severity": {
+    "HIGH": "مرتفعة",
+    "MEDIUM": "متوسطة",
+    "LOW": "منخفضة"
+  },
+  "insightType": {
+    "UNRESOLVED_FOLLOW_UP": "متابعة معلّقة",
+    "REPEATED_PATTERN": "نمط متكرر",
+    "CHANGE_DETECTION": "تغيّر ملحوظ",
+    "MISSING_THREAD": "مسار غير مكتمل",
+    "PREVENTIVE_RECOMMENDATION": "توصية وقائية"
+  },
+  "dashboard": {
+    "greeting": "مرحباً",
+    "subtitle": "هذه نظرة صدى على رحلتك الصحية.",
+    "insights": "رؤى صدى",
+    "insightsSub": "أنماط اكتُشفت من بياناتك — كل رؤية مرتبطة بمصدرها.",
+    "noInsights": "لا توجد رؤى مهمة حالياً. رحلتك تبدو مستقرة.",
+    "evidence": "المصدر",
+    "recommendation": "التوصية",
+    "freshnessTitle": "تحديث بياناتك",
+    "upcoming": "المواعيد القادمة",
+    "noUpcoming": "لا مواعيد قادمة.",
+    "recentActivity": "أحدث الأحداث",
+    "viewJourney": "عرض الرحلة الصحية",
+    "askEcho": "اسأل صدى",
+    "statEncounters": "الزيارات",
+    "statActiveMeds": "أدوية فعّالة",
+    "statOpenFollowUps": "متابعات معلّقة",
+    "statLabs": "نتائج تحاليل"
+  },
+  "freshness": {
+    "WEIGHT": "قد تكون بيانات وزنك قديمة. حدّثها لتحسين تحليل صدى.",
+    "BLOOD_PRESSURE": "قد تكون قراءات ضغط الدم قديمة. حدّثها لتحسين التحليل.",
+    "HEART_RATE": "قد تكون قراءة النبض قديمة.",
+    "HEIGHT": "لم يُسجّل الطول بعد.",
+    "TEMPERATURE": "قد تكون قراءة الحرارة قديمة.",
+    "PROFILE_BASICS": "بعض بيانات ملفك الأساسية ناقصة."
+  },
+  "timeline": {
+    "subtitle": "رحلتك الصحية عبر الزمن — كل حدث من سجلاتك.",
+    "all": "الكل",
+    "askEcho": "اسأل صدى",
+    "empty": "لا توجد أحداث بعد."
+  },
+  "labs": {
+    "subtitle": "نتائج تحاليلك واتجاهاتها عبر الزمن.",
+    "referenceRange": "المعدل الطبيعي",
+    "latest": "الأحدث",
+    "noData": "لا توجد نتائج تحاليل.",
+    "measurements": "قراءة"
+  },
+  "chat": {
+    "subtitle": "اسأل صدى عن رحلتك الصحية بلغتك.",
+    "placeholder": "اكتب سؤالك…",
+    "send": "إرسال",
+    "thinking": "صدى يفكّر…",
+    "disclaimer": "صدى يشرح بياناتك ولا يقدّم تشخيصاً. راجع طبيبك لأي قرار.",
+    "s1": "ماذا يعني ارتفاع تحليل السكر التراكمي لدي؟",
+    "s2": "هل لدي متابعات معلّقة؟",
+    "s3": "ما أهم التغيّرات في رحلتي الصحية؟"
+  },
+  "doctorView": {
+    "back": "العودة للقائمة",
+    "overview": "ملخص المريض",
+    "needsAttention": "يتطلب الانتباه",
+    "needsAttentionSub": "أنماط اكتُشفت آلياً من السجلات — كل عنصر مرتبط بمصدره.",
+    "noAttention": "لا توجد عناصر تتطلب انتباهاً حالياً.",
+    "unresolvedFollowUps": "متابعات غير مكتملة",
+    "noFollowUps": "لا توجد متابعات معلّقة.",
+    "keyMetrics": "المؤشرات الأساسية",
+    "labsTrends": "التحاليل والاتجاهات",
+    "medications": "الأدوية",
+    "noMeds": "لا توجد أدوية مسجّلة.",
+    "timeline": "الرحلة السريرية",
+    "dueBy": "الاستحقاق",
+    "overdueBy": "متأخرة {days} يوم",
+    "lastVisit": "آخر زيارة",
+    "openFollowUps": "متابعات معلّقة",
+    "activeMeds": "أدوية فعّالة",
+    "evidence": "المصدر",
+    "recommendation": "الإجراء المقترح",
+    "forbidden": "لا تملك صلاحية الوصول لهذا المريض",
+    "forbiddenSub": "لا توجد علاقة رعاية فعّالة تربطك بهذا المريض."
+  },
+  "metrics": {
+    "weight": "الوزن",
+    "bloodPressure": "ضغط الدم",
+    "heartRate": "النبض",
+    "hba1c": "السكر التراكمي"
+  },
+  "previsit": {
+    "title": "ملخص صدى قبل الزيارة",
+    "subtitle": "قراءة تحليلية موجزة لرحلة المريض — مبنية على الأدلة.",
+    "journeySummary": "لمحة عن الرحلة",
+    "keyChanges": "أهم التغيّرات",
+    "unresolvedThreads": "مسارات غير مكتملة",
+    "reviewToday": "يستحق المراجعة اليوم",
+    "evidence": "الأدلة",
+    "unavailable": "تعذّر إعداد الملخص حالياً.",
+    "generating": "يجهّز صدى ملخص ما قبل الزيارة…",
+    "notADiagnosis": "دعم للقرار السريري — وليس تشخيصاً."
+  },
+  "threads": {
+    "title": "المسارات الصحية",
+    "patientSubtitle": "أمور من رحلتك الصحية يتابعها صدى معك — لكل منها مصدره.",
+    "doctorTitle": "المسارات السريرية",
+    "doctorSubtitle": "مسارات مستمرة من المحرّك الحتمي — مع الحالة والأدلة.",
+    "empty": "لا توجد مسارات مفتوحة حالياً.",
+    "evidence": "الأدلة",
+    "whatEcho": "ما لاحظه صدى",
+    "askEcho": "اسأل صدى عن هذا",
+    "notADiagnosis": "دعم للفهم — وليس تشخيصاً. راجع طبيبك لأي قرار.",
+    "detectedOn": "رُصد في",
+    "status": {
+      "OPEN": "مفتوح",
+      "ACKNOWLEDGED": "قيد المتابعة",
+      "DISMISSED": "مُستبعد",
+      "RESOLVED": "مُغلق"
+    },
+    "actions": {
+      "acknowledge": "بدء المتابعة",
+      "resolve": "إغلاق",
+      "reopen": "إعادة فتح"
+    },
+    "patientHeadline": {
+      "CHANGE_DETECTION": "تغيّر يستحق المتابعة",
+      "UNRESOLVED_FOLLOW_UP": "متابعة لم تكتمل بعد",
+      "REPEATED_PATTERN": "عرض يتكرر",
+      "MISSING_THREAD": "نتيجة تحتاج إكمالاً",
+      "PREVENTIVE_RECOMMENDATION": "خطوة وقائية مقترحة"
+    },
+    "patientGuidance": {
+      "CHANGE_DETECTION": "ننصح بمراجعة هذا التغيّر مع طبيبك.",
+      "UNRESOLVED_FOLLOW_UP": "يُفضّل تحديد موعد لإكمال هذه المتابعة.",
+      "REPEATED_PATTERN": "اذكر تكرار هذا العرض لطبيبك في زيارتك القادمة.",
+      "MISSING_THREAD": "قد تحتاج نتيجة إعادة فحص — راجع طبيبك.",
+      "PREVENTIVE_RECOMMENDATION": "ناقش هذه الخطوة الوقائية مع طبيبك."
+    }
+  },
+  "meds": {
+    "subtitle": "أدويتك الحالية والسابقة.",
+    "prescribedBy": "وصفه",
+    "reason": "السبب",
+    "since": "من",
+    "until": "إلى",
+    "none": "لا توجد أدوية مسجّلة."
+  },
+  "medStatus": {
+    "ACTIVE": "فعّال",
+    "STOPPED": "موقوف",
+    "COMPLETED": "منتهٍ",
+    "ON_HOLD": "معلّق"
+  },
+  "reports": {
+    "subtitle": "تقاريرك الطبية.",
+    "by": "بواسطة",
+    "none": "لا توجد تقارير."
+  },
+  "reportType": {
+    "RADIOLOGY": "أشعة",
+    "PATHOLOGY": "باثولوجي",
+    "DISCHARGE_SUMMARY": "ملخص خروج",
+    "CONSULT_NOTE": "استشارة",
+    "PROCEDURE": "إجراء",
+    "PROGRESS_NOTE": "ملاحظة متابعة"
+  },
+  "appointments": {
+    "subtitle": "مواعيدك القادمة والسابقة.",
+    "upcoming": "القادمة",
+    "past": "السابقة",
+    "with": "مع",
+    "none": "لا توجد مواعيد."
+  },
+  "apptStatus": {
+    "SCHEDULED": "مجدول",
+    "COMPLETED": "مكتمل",
+    "CANCELLED": "ملغى",
+    "NO_SHOW": "لم يحضر"
+  },
+  "careTeam": {
+    "subtitle": "الأطباء الذين لديهم علاقة رعاية فعّالة معك.",
+    "primary": "الطبيب الأساسي",
+    "since": "منذ",
+    "none": "لا يوجد أطباء."
+  },
+  "profile": {
+    "subtitle": "معلوماتك الأساسية.",
+    "mrn": "الرقم الطبي",
+    "dob": "تاريخ الميلاد",
+    "age": "العمر",
+    "years": "سنة",
+    "gender": "الجنس",
+    "height": "الطول",
+    "weight": "الوزن",
+    "bmi": "مؤشر كتلة الجسم",
+    "bloodType": "فصيلة الدم",
+    "city": "المدينة",
+    "lastMeasured": "آخر قياس",
+    "notRecorded": "غير مسجّل"
+  },
+  "gender": {
+    "MALE": "ذكر",
+    "FEMALE": "أنثى",
+    "OTHER": "آخر",
+    "UNKNOWN": "غير محدد"
+  },
+  "alertsPage": {
+    "subtitle": "أمور قد تستحق انتباهك، مع توصيات عامة — مبنية على بياناتك.",
+    "attention": "يستحق الانتباه",
+    "recommendations": "توصيات",
+    "noAlerts": "لا توجد تنبيهات حالياً. رحلتك تبدو مستقرة.",
+    "noRecommendations": "لا توجد توصيات حالياً.",
+    "viewThread": "عرض المسار",
+    "details": "التفاصيل",
+    "updateInfo": "تحديث البيانات",
+    "outdated": "بيانات قد تكون قديمة",
+    "askEcho": "اسأل صدى",
+    "doctorAttention": "تنبيهات وبيانات تحتاج انتباهاً"
+  }
+}

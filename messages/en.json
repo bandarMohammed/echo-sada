@@ -1,0 +1,266 @@
+{
+  "app": {
+    "name": "ECHO",
+    "latinName": "ECHO",
+    "tagline": "The Patient's Second Memory"
+  },
+  "landing": {
+    "eyebrow": "Healthcare intelligence platform",
+    "title": "Your health journey, understood over time",
+    "subtitle": "ECHO turns your existing health data into a continuous, understandable journey — it analyzes, detects, explains, recommends, and alerts. It never diagnoses.",
+    "enterAsPatient": "Enter as Patient",
+    "enterAsDoctor": "Enter as Doctor",
+    "demoNote": "Demo environment with synthetic data only — no real patient data is used."
+  },
+  "common": {
+    "language": "Language",
+    "loading": "Loading…",
+    "back": "Back",
+    "patient": "Patient",
+    "doctor": "Doctor",
+    "viewAll": "View all",
+    "none": "None",
+    "notADiagnosis": "This is not a diagnosis — informational only, consult your doctor."
+  },
+  "roles": {
+    "patient": "Patient",
+    "doctor": "Doctor",
+    "viewingAs": "Viewing as",
+    "selectPatient": "Select a patient",
+    "selectDoctor": "Select a doctor"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "timeline": "Health Journey",
+    "labs": "Lab Results",
+    "medications": "Medications",
+    "reports": "Reports",
+    "appointments": "Appointments",
+    "doctors": "Doctors",
+    "chat": "ECHO Assistant",
+    "alerts": "Alerts",
+    "threads": "Care Threads",
+    "profile": "Health Profile",
+    "patients": "Patients"
+  },
+  "severity": {
+    "HIGH": "High",
+    "MEDIUM": "Medium",
+    "LOW": "Low"
+  },
+  "insightType": {
+    "UNRESOLVED_FOLLOW_UP": "Unresolved follow-up",
+    "REPEATED_PATTERN": "Repeated pattern",
+    "CHANGE_DETECTION": "Notable change",
+    "MISSING_THREAD": "Incomplete thread",
+    "PREVENTIVE_RECOMMENDATION": "Preventive recommendation"
+  },
+  "dashboard": {
+    "greeting": "Hello",
+    "subtitle": "Here's ECHO's view of your health journey.",
+    "insights": "ECHO Insights",
+    "insightsSub": "Patterns detected from your data — each insight links to its source.",
+    "noInsights": "No notable insights right now. Your journey looks stable.",
+    "evidence": "Source",
+    "recommendation": "Recommendation",
+    "freshnessTitle": "Update your information",
+    "upcoming": "Upcoming appointments",
+    "noUpcoming": "No upcoming appointments.",
+    "recentActivity": "Recent activity",
+    "viewJourney": "View health journey",
+    "askEcho": "Ask ECHO",
+    "statEncounters": "Encounters",
+    "statActiveMeds": "Active meds",
+    "statOpenFollowUps": "Open follow-ups",
+    "statLabs": "Lab results"
+  },
+  "freshness": {
+    "WEIGHT": "Your weight information may be outdated. Update it to improve ECHO's analysis.",
+    "BLOOD_PRESSURE": "Your blood-pressure readings may be outdated. Update them to improve analysis.",
+    "HEART_RATE": "Your heart-rate reading may be outdated.",
+    "HEIGHT": "Height has not been recorded yet.",
+    "TEMPERATURE": "Your temperature reading may be outdated.",
+    "PROFILE_BASICS": "Some basic profile information is missing."
+  },
+  "timeline": {
+    "subtitle": "Your health journey over time — every event from your records.",
+    "all": "All",
+    "askEcho": "Ask ECHO",
+    "empty": "No events yet."
+  },
+  "labs": {
+    "subtitle": "Your lab results and how they trend over time.",
+    "referenceRange": "Reference range",
+    "latest": "Latest",
+    "noData": "No lab results.",
+    "measurements": "readings"
+  },
+  "chat": {
+    "subtitle": "Ask ECHO about your health journey, in your language.",
+    "placeholder": "Type your question…",
+    "send": "Send",
+    "thinking": "ECHO is thinking…",
+    "disclaimer": "ECHO explains your data and does not diagnose. Consult your doctor for any decision.",
+    "s1": "What does my rising HbA1c mean?",
+    "s2": "Do I have any open follow-ups?",
+    "s3": "What are the most important changes in my journey?"
+  },
+  "doctorView": {
+    "back": "Back to list",
+    "overview": "Patient overview",
+    "needsAttention": "Needs attention",
+    "needsAttentionSub": "Patterns detected automatically from the records — each links to its source.",
+    "noAttention": "No attention items right now.",
+    "unresolvedFollowUps": "Unresolved follow-ups",
+    "noFollowUps": "No open follow-ups.",
+    "keyMetrics": "Key metrics",
+    "labsTrends": "Labs & trends",
+    "medications": "Medications",
+    "noMeds": "No medications on record.",
+    "timeline": "Clinical timeline",
+    "dueBy": "Due",
+    "overdueBy": "Overdue by {days} days",
+    "lastVisit": "Last visit",
+    "openFollowUps": "Open follow-ups",
+    "activeMeds": "Active meds",
+    "evidence": "Source",
+    "recommendation": "Suggested action",
+    "forbidden": "You are not authorized to view this patient",
+    "forbiddenSub": "No active care relationship links you to this patient."
+  },
+  "metrics": {
+    "weight": "Weight",
+    "bloodPressure": "Blood pressure",
+    "heartRate": "Heart rate",
+    "hba1c": "HbA1c"
+  },
+  "previsit": {
+    "title": "ECHO Pre-Visit Briefing",
+    "subtitle": "A concise, evidence-grounded read of the patient's journey.",
+    "journeySummary": "Journey summary",
+    "keyChanges": "Key changes",
+    "unresolvedThreads": "Unresolved threads",
+    "reviewToday": "Worth reviewing today",
+    "evidence": "Evidence",
+    "unavailable": "The briefing is unavailable right now.",
+    "generating": "ECHO is preparing the pre-visit briefing…",
+    "notADiagnosis": "Clinical decision-support — not a diagnosis."
+  },
+  "threads": {
+    "title": "Care Threads",
+    "patientSubtitle": "Things from your health journey ECHO is following with you — each has its source.",
+    "doctorTitle": "Clinical Threads",
+    "doctorSubtitle": "Persistent threads from the deterministic engine — with status and evidence.",
+    "empty": "No open threads right now.",
+    "evidence": "Evidence",
+    "whatEcho": "What ECHO noticed",
+    "askEcho": "Ask ECHO about this",
+    "notADiagnosis": "For understanding — not a diagnosis. Consult your doctor for any decision.",
+    "detectedOn": "Detected",
+    "status": {
+      "OPEN": "Open",
+      "ACKNOWLEDGED": "In progress",
+      "DISMISSED": "Dismissed",
+      "RESOLVED": "Resolved"
+    },
+    "actions": {
+      "acknowledge": "Start follow-up",
+      "resolve": "Resolve",
+      "reopen": "Reopen"
+    },
+    "patientHeadline": {
+      "CHANGE_DETECTION": "A change worth following",
+      "UNRESOLVED_FOLLOW_UP": "A follow-up that isn't complete yet",
+      "REPEATED_PATTERN": "A recurring symptom",
+      "MISSING_THREAD": "A result that needs completing",
+      "PREVENTIVE_RECOMMENDATION": "A suggested preventive step"
+    },
+    "patientGuidance": {
+      "CHANGE_DETECTION": "It's worth reviewing this change with your doctor.",
+      "UNRESOLVED_FOLLOW_UP": "Consider scheduling this follow-up.",
+      "REPEATED_PATTERN": "Mention this recurring symptom to your doctor at your next visit.",
+      "MISSING_THREAD": "This result may need a re-check — consult your doctor.",
+      "PREVENTIVE_RECOMMENDATION": "Discuss this preventive step with your doctor."
+    }
+  },
+  "meds": {
+    "subtitle": "Your current and past medications.",
+    "prescribedBy": "Prescribed by",
+    "reason": "Reason",
+    "since": "From",
+    "until": "To",
+    "none": "No medications on record."
+  },
+  "medStatus": {
+    "ACTIVE": "Active",
+    "STOPPED": "Stopped",
+    "COMPLETED": "Completed",
+    "ON_HOLD": "On hold"
+  },
+  "reports": {
+    "subtitle": "Your medical reports.",
+    "by": "By",
+    "none": "No reports."
+  },
+  "reportType": {
+    "RADIOLOGY": "Radiology",
+    "PATHOLOGY": "Pathology",
+    "DISCHARGE_SUMMARY": "Discharge summary",
+    "CONSULT_NOTE": "Consult note",
+    "PROCEDURE": "Procedure",
+    "PROGRESS_NOTE": "Progress note"
+  },
+  "appointments": {
+    "subtitle": "Your upcoming and past appointments.",
+    "upcoming": "Upcoming",
+    "past": "Past",
+    "with": "With",
+    "none": "No appointments."
+  },
+  "apptStatus": {
+    "SCHEDULED": "Scheduled",
+    "COMPLETED": "Completed",
+    "CANCELLED": "Cancelled",
+    "NO_SHOW": "No-show"
+  },
+  "careTeam": {
+    "subtitle": "Doctors with an active care relationship with you.",
+    "primary": "Primary doctor",
+    "since": "Since",
+    "none": "No doctors."
+  },
+  "profile": {
+    "subtitle": "Your basic information.",
+    "mrn": "Medical record no.",
+    "dob": "Date of birth",
+    "age": "Age",
+    "years": "years",
+    "gender": "Sex",
+    "height": "Height",
+    "weight": "Weight",
+    "bmi": "BMI",
+    "bloodType": "Blood type",
+    "city": "City",
+    "lastMeasured": "Last measured",
+    "notRecorded": "Not recorded"
+  },
+  "gender": {
+    "MALE": "Male",
+    "FEMALE": "Female",
+    "OTHER": "Other",
+    "UNKNOWN": "Unspecified"
+  },
+  "alertsPage": {
+    "subtitle": "Things that may need your attention, with general recommendations — grounded in your data.",
+    "attention": "Needs attention",
+    "recommendations": "Recommendations",
+    "noAlerts": "No alerts right now. Your journey looks stable.",
+    "noRecommendations": "No recommendations right now.",
+    "viewThread": "View thread",
+    "details": "Details",
+    "updateInfo": "Update info",
+    "outdated": "Information may be outdated",
+    "askEcho": "Ask ECHO",
+    "doctorAttention": "Alerts & data needing attention"
+  }
+}
